@@ -17,7 +17,7 @@ class ReferrerMiddleware():
             except Referrer.DoesNotExist:
                 if settings.AUTO_CREATE:
                     referrer = Referrer(name=referrer_name)
-                    if request.user and request.user.is_authenticated():
+                    if hasattr(request, 'user') and request.user and request.user.is_authenticated():
                         referrer.user = self.request.user
                     referrer.save()
                 if referrer is not None and settings.AUTO_ASSOCIATE:
